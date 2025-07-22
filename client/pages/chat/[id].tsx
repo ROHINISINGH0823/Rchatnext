@@ -1,11 +1,11 @@
-import Sidebar from "../../components/Sidebar";
-import ChatBox from "../../components/ChatBox";
+import Sidebar from "../../components/Chat/Sidebar";
+import ChatBox from "../../components/Chat/ChatBox";
 
-export default function ChatPage() {
+export default function PrivateChatPage({ params }: { params: { uid: string } }) {
   return (
     <div className="flex h-screen">
       <Sidebar />
-      <ChatBox />
+      <ChatBox friendUid={params.uid} />
     </div>
   );
 }
