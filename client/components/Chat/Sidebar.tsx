@@ -1,46 +1,27 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+const users = [
+  { name: "Emma Johnson", message: "Sounds good!", image: "/avatars/emma.jpg" },
+  { name: "Michael Smith", message: "Hey, how are you?", image: "/avatars/michael.jpg" },
+  { name: "James Williams", message: "Hey", image: "/avatars/james.jpg" },
+  { name: "Sarah Davis", message: "Good gif now", image: "/avatars/sarah.jpg" },
+  { name: "David Brown", message: "Yesterday", image: "/avatars/david.jpg" },
+  { name: "Emily Wilson", message: "Last week", image: "/avatars/emily.jpg" },
+  { name: "Daniel Miller", message: "", image: "/avatars/daniel.jpg" },
+];
 
 export default function Sidebar() {
-  const [friends, setFriends] = useState<{ uid: string; name: string }[]>([]);
-  const router = useRouter();
-  const myUid = typeof window !== "undefined" ? localStorage.getItem("uid") : null;
-
-  useEffect(() => {
-    const fetchFriends = async () => {
-      try {
-        if (!myUid) return;
-
-        const res = await axios.get(`http://localhost:5000/api/friends/friends/${myUid}`);
-        setFriends(res.data);
-      } catch (err) {
-        console.error("❌ Failed to load friends", err);
-      }
-    };
-
-    fetchFriends();
-  }, [myUid]);
-
-  const goToChat = (friendUid: string) => {
-    router.push(`/chat/${friendUid}`);
-  };
-
   return (
-    <div className="w-1/3 max-w-xs bg-gray-100 p-4 border-r overflow-y-auto">
-      <h2 className="text-lg font-semibold mb-4">👥 Friends</h2>
-
-      {friends.length === 0 && <p className="text-sm text-gray-500">No friends yet.</p>}
-
-      {friends.map((friend) => (
-        <div
-          key={friend.uid}
-          onClick={() => goToChat(friend.uid)}
-          className="p-2 mb-2 bg-white rounded shadow hover:bg-blue-100 cursor-pointer"
-        >
-          {friend.name}
+    <div className="w-[24%] bg-[#FDFDFD] rounded-3xl p-5 shadow-lg overflow-y-auto">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Chats</h2>
+      {users.map((user, i) => (
+        <div key={i} className="flex items-center space-x-4 py-3 rounded-2xl px-4 cursor-pointer hover:bg-[#F0F8F7]">
+          <div className="relative">
+            <img src={user.image} alt={user.name} className="w-14 h-14 rounded-full" />
+            
+          </div>
+          <div>
+            <p className="font-bold text-base text-gray-800">{user.name}</p>
+            <p className="text-sm text-gray-500">{user.message}</p>
+          </div>
         </div>
       ))}
     </div>

@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config(); 
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://mishraarohi1808:arohi0825@rohini.v0j0f4i.mongodb.net/chatnext?retryWrites=true&w=majority&appName=rohini",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
-    console.log("✅ MongoDB Connected");
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB Connected");
   } catch (error) {
-    console.error("❌ MongoDB connection error:", error);
+    console.error("MongoDB connection error:", error);
     process.exit(1);
   }
 };
